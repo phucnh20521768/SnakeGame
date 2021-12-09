@@ -135,113 +135,7 @@ void Snake::Menu(int& play)
 		}
 	}
 }
-void Snake::Play(int level)
-{
-	bool gameover = false;
-	score = 0;
-	Nocursortype();
-	srand(time(NULL));
-	int x = rand() % (60 - 15 + 1) + 15;
-	int y = rand() % (21 - 5 + 1) + 5;
-	int xM = 0, yM = 0;
-	int X[100], Y[100];
-	Init(X, Y, x, y);
-	DrawAllLine();
-	gotoXY(82, 6);
-	cout << "Score: " << score;
-	gotoXY(82, 1);
-	cout << " - Use arrow keys to move";
-	gotoXY(82, 2);
-	cout << " - Press P to pause";
-	gotoXY(82, 3);
-	cout << " - Press R to countinue";
-	gotoXY(82, 4);
-	cout << " - Press Q to quit";
-	DrawSnake(X, Y);
-	CreateDollar(xM, yM, X, Y);
-	int check = 2;
-	int oldCheck = -1;
-	char kiTu;
-	while (gameover == false)
-	{
-		DeleteData(X, Y);
-
-		if (_kbhit())
-		{
-			kiTu = _getch();
-			if (kiTu == -32)
-			{
-				kiTu = _getch();
-				if (kiTu == 72 && check != 0) // di len
-				{
-					check = 1;
-				}
-				else if (kiTu == 80 && check != 1) // di xuong
-				{
-					check = 0;
-				}
-				else if (kiTu == 75 && check != 2) // sang trai
-				{
-					check = 3;
-				}
-				else if (kiTu == 77 && check != 3) // sang phai
-					check = 2;
-			}
-			else if (kiTu == (int)'p' && oldCheck == -1)
-			{
-				oldCheck = check;
-				check = 4;
-				gotoXY(82, 5);
-				cout << "Paused";
-			}
-			else if (kiTu == (int)'r' && oldCheck != -1)
-			{
-				check = oldCheck;
-				oldCheck = -1;
-				gotoXY(82, 5);
-				cout << "      ";
-			}
-			else if (kiTu == (int)'q')
-			{
-				return;
-			}
-		}
-		if (check == 0) // di xuong
-		{
-			y++;
-		}
-		else if (check == 1) // di len
-		{
-			y--;
-		}
-		else if (check == 2) // sang phai
-		{
-			x++;
-		}
-		else if (check == 3) // sang trai
-		{
-			x--;
-		}
-		Processing(X, Y, x, y, xM, yM, check);
-		if (IsGameOver(X[0], Y[0]) == true || IsSnakeTouchBody(X, Y) == true)
-		{
-			PlaySound(TEXT("Sound/endGame.wav"), NULL, SND_FILENAME | SND_ASYNC);
-			gameover = true;
-			gotoXY(82, 5);
-			cout << "Game over";
-			gotoXY(82, 7);
-			cout << "Exiting...";
-			Sleep(3000);
-		}
-		if (check == 1 || check == 0)
-		{
-			Sleep(level);
-		}
-		else
-			Sleep(level / 2);
-	}
-}
-void Snake::PlayModern(int level)
+void Snake::PlayClassic(int level)
 {
 	bool gameover = false;
 	score = 0;
@@ -338,6 +232,112 @@ void Snake::PlayModern(int level)
 		}
 		Processing(X, Y, x, y, xM, yM, check);
 		if (IsSnakeTouchBody(X, Y) == true)
+		{
+			PlaySound(TEXT("Sound/endGame.wav"), NULL, SND_FILENAME | SND_ASYNC);
+			gameover = true;
+			gotoXY(82, 5);
+			cout << "Game over";
+			gotoXY(82, 7);
+			cout << "Exiting...";
+			Sleep(3000);
+		}
+		if (check == 1 || check == 0)
+		{
+			Sleep(level);
+		}
+		else
+			Sleep(level / 2);
+	}
+}
+void Snake::PlayModern(int level)
+{
+	bool gameover = false;
+	score = 0;
+	Nocursortype();
+	srand(time(NULL));
+	int x = rand() % (60 - 15 + 1) + 15;
+	int y = rand() % (21 - 5 + 1) + 5;
+	int xM = 0, yM = 0;
+	int X[100], Y[100];
+	Init(X, Y, x, y);
+	DrawAllLine();
+	gotoXY(82, 6);
+	cout << "Score: " << score;
+	gotoXY(82, 1);
+	cout << " - Use arrow keys to move";
+	gotoXY(82, 2);
+	cout << " - Press P to pause";
+	gotoXY(82, 3);
+	cout << " - Press R to countinue";
+	gotoXY(82, 4);
+	cout << " - Press Q to quit";
+	DrawSnake(X, Y);
+	CreateDollar(xM, yM, X, Y);
+	int check = 2;
+	int oldCheck = -1;
+	char kiTu;
+	while (gameover == false)
+	{
+		DeleteData(X, Y);
+
+		if (_kbhit())
+		{
+			kiTu = _getch();
+			if (kiTu == -32)
+			{
+				kiTu = _getch();
+				if (kiTu == 72 && check != 0) // di len
+				{
+					check = 1;
+				}
+				else if (kiTu == 80 && check != 1) // di xuong
+				{
+					check = 0;
+				}
+				else if (kiTu == 75 && check != 2) // sang trai
+				{
+					check = 3;
+				}
+				else if (kiTu == 77 && check != 3) // sang phai
+					check = 2;
+			}
+			else if (kiTu == (int)'p' && oldCheck == -1)
+			{
+				oldCheck = check;
+				check = 4;
+				gotoXY(82, 5);
+				cout << "Paused";
+			}
+			else if (kiTu == (int)'r' && oldCheck != -1)
+			{
+				check = oldCheck;
+				oldCheck = -1;
+				gotoXY(82, 5);
+				cout << "      ";
+			}
+			else if (kiTu == (int)'q')
+			{
+				return;
+			}
+		}
+		if (check == 0) // di xuong
+		{
+			y++;
+		}
+		else if (check == 1) // di len
+		{
+			y--;
+		}
+		else if (check == 2) // sang phai
+		{
+			x++;
+		}
+		else if (check == 3) // sang trai
+		{
+			x--;
+		}
+		Processing(X, Y, x, y, xM, yM, check);
+		if (IsGameOver(X[0], Y[0]) == true || IsSnakeTouchBody(X, Y) == true)
 		{
 			PlaySound(TEXT("Sound/endGame.wav"), NULL, SND_FILENAME | SND_ASYNC);
 			gameover = true;
@@ -841,7 +841,7 @@ void Snake::Level(int type, int &play)
 					SetColor(7);
 					system("cls");
 					if (type == 0)
-						Play(120);
+						PlayClassic(120);
 					else
 						PlayModern(120);
 					return;
@@ -851,7 +851,7 @@ void Snake::Level(int type, int &play)
 					SetColor(7);
 					system("cls");
 					if (type == 0)
-						Play(100);
+						PlayClassic(100);
 					else
 						PlayModern(100);
 					return;
@@ -861,7 +861,7 @@ void Snake::Level(int type, int &play)
 					SetColor(7);
 					system("cls");
 					if (type == 0)
-						Play(80);
+						PlayClassic(80);
 					else
 						PlayModern(80);
 					return;
@@ -871,7 +871,7 @@ void Snake::Level(int type, int &play)
 					SetColor(7);
 					system("cls");
 					if (type == 0)
-						Play(60);
+						PlayClassic(60);
 					else
 						PlayModern(60);
 					return;
@@ -881,7 +881,7 @@ void Snake::Level(int type, int &play)
 					SetColor(7);
 					system("cls");
 					if (type == 0)
-						Play(40);
+						PlayClassic(40);
 					else
 						PlayModern(40);
 					return;

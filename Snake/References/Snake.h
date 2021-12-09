@@ -35,7 +35,7 @@ public:
 	bool IsGameOver(int x0, int y0);
 	bool IsSnakeOnDollar(int X[], int Y[], int x0, int y0);
 	bool IsSnakeEatDollar(int& x0, int& y0, int X[], int Y[]);
-	void Play(int level);
+	void PlayClassic(int level);
 	void PlayModern(int level);
 	void Menu(int& play);
 	void gotoXY(int x, int y);
